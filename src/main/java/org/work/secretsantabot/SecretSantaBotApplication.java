@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
 
 @Controller
 @SpringBootApplication
@@ -34,7 +36,12 @@ public class SecretSantaBotApplication {
     @PostMapping("auth")
     public @ResponseBody ResponseEntity<HttpStatus> auth(@RequestBody String body) {
         String decodeBody = URLDecoder.decode(body, StandardCharsets.UTF_8);
-        log.info("Auth request received: {}", decodeBody);
+        var bodyParam = new HashMap<String, String>();
+        Arrays.stream(decodeBody.split("&")).forEach(param ->
+                bodyParam.put(param.split("=")[0], param.split("=")[1])
+        );
+
+        log.info("Auth request received: {}", bodyParam);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
