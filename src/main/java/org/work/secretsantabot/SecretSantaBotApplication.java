@@ -42,7 +42,7 @@ public class SecretSantaBotApplication {
                 bodyParam.put(param.split("=")[0], param.split("=")[1])
         );
 
-        log.info(bodyParam.keySet().stream().sorted().toString());
+        bodyParam.keySet().stream().sorted().forEach(log::info);
 
 //        String secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmacHex();
 
