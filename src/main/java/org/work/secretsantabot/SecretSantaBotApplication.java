@@ -47,7 +47,7 @@ public class SecretSantaBotApplication {
                 dataString.append(key).append("=").append(bodyParam.get(key)).append("\n")
         );
 
-        String dataCheckString = dataString.substring(0, dataString.length() - 3);
+        String dataCheckString = dataString.substring(0, dataString.length() - 2);
         log.info("Data check string: {}", dataCheckString);
         byte[] secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmac("7788698179:AAEPrRzXhUt5onDNFauZcLTepOZzpBdvz88");
 
