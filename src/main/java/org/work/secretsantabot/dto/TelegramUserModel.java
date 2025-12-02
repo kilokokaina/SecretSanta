@@ -1,5 +1,10 @@
 package org.work.secretsantabot.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
 public class TelegramUserModel {
 
     private int id;
@@ -10,19 +15,5 @@ public class TelegramUserModel {
     private boolean is_premium;
     private boolean allows_write_to_pm;
     private String photo_url;
-
-    public TelegramUserModel() {}
-
-    public String getFirst_name() {
-        return this.first_name;
-    }
-
-    public String getLast_name() {
-        return this.last_name;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
 
 }
