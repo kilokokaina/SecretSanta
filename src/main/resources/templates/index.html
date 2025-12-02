@@ -11,8 +11,10 @@
     <div id="tg_body"></div>
     <script>
       function sendAuth() {
-        let authData = window.Telegram.WebApp.initData;
-        document.querySelector('#tg_body').innerHTML = decodeURI(authData);
+        let authData = decodeURI(window.Telegram.WebApp.initData);
+        let authDataArray = authData.split('&');
+
+        document.querySelector('#tg_body').innerHTML = authDataArray[1];
         // fetch('auth', {
         //   method: 'POST',
         //   body: authData.toString()
