@@ -61,12 +61,9 @@
     </div>
     <script>
       function sendAuth() {
-        let authData = decodeURI(window.Telegram.WebApp.initData);
-        let authDataArray = authData.split('&');
-
         fetch('auth', {
           method: 'POST',
-          body: authData
+          body: window.Telegram.WebApp.initData
         });
       }
     </script>
