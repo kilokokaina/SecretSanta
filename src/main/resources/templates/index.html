@@ -14,11 +14,11 @@
         let authData = decodeURI(window.Telegram.WebApp.initData);
         let authDataArray = authData.split('&');
 
-        document.querySelector('#tg_body').innerHTML = authDataArray[1];
-        // fetch('auth', {
-        //   method: 'POST',
-        //   body: authData.toString()
-        // })
+        document.querySelector('#tg_body').innerHTML = authDataArray.toString();
+        fetch('auth', {
+          method: 'POST',
+          body: authData
+        });
       }
     </script>
   </body>
