@@ -80,7 +80,9 @@ public class SecretSantaBotApplication {
         log.info("Is hash equals: {}", bodyParam.get("hash").equals(new HmacUtils("HmacSHA256", secretKey).hmacHex(dataCheckString)));
 
         var tgUserModel = new ObjectMapper().readValue(bodyParam.get("user"), TelegramUserModel.class);
-        log.info("user = {}", tgUserModel);
+        log.info("User firstname = {}", tgUserModel.getFirst_name());
+        log.info("User lastname = {}", tgUserModel.getLast_name());
+        log.info("User username = {}", tgUserModel.getUsername());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
