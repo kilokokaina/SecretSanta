@@ -43,7 +43,7 @@ public class SecretSantaBotApplication {
         );
 
         var dataString = new StringBuilder();
-        bodyParam.keySet().stream().sorted().forEach(key ->
+        bodyParam.keySet().stream().sorted().filter(key -> !key.equals("hash")).forEach(key ->
                 dataString.append(key).append("=").append(bodyParam.get(key)).append("\n")
         );
 
