@@ -1,5 +1,6 @@
 package org.work.secretsantabot;
 
+import org.apache.commons.codec.digest.HmacUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -40,6 +41,10 @@ public class SecretSantaBotApplication {
         Arrays.stream(decodeBody.split("&")).forEach(param ->
                 bodyParam.put(param.split("=")[0], param.split("=")[1])
         );
+
+        log.info(bodyParam.keySet().stream().sorted().toString());
+
+//        String secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmacHex();
 
         log.info("Auth request received: {}", bodyParam);
 
