@@ -51,6 +51,7 @@ public class SecretSantaBotApplication {
         byte[] secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmac("7788698179:AAEPrRzXhUt5onDNFauZcLTepOZzpBdvz88");
 
         log.info("Is hash equals: {}", bodyParam.get("hash").equals(new HmacUtils("HmacSHA256", secretKey).hmacHex(dataCheckString)));
+        log.info("user = {}", bodyParam.get("user"));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
