@@ -42,11 +42,16 @@ public class SecretSantaBotApplication {
                 bodyParam.put(param.split("=")[0], param.split("=")[1])
         );
 
-        bodyParam.keySet().stream().sorted().forEach(log::info);
+        var dataString = new StringBuilder();
+        bodyParam.keySet().stream().sorted().forEach(key -> {
+            dataString.append(key).append("=").append(bodyParam.get(key)).append("\n");
+        });
 
-//        String secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmacHex();
+        String dataCheckString = dataString.substring(0, dataString.length() - 3);
+        String secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmacHex("7788698179:AAEPrRzXhUt5onDNFauZcLTepOZzpBdvz88");
 
         log.info("Auth request received: {}", bodyParam);
+        log.info("Data check string has: {}", new HmacUtils("HmacSHA256", secretKey).hmacHex(dataCheckString));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
