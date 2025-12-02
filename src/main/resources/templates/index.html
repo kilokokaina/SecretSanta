@@ -12,7 +12,7 @@
     <script>
       function sendAuth() {
         let authData = window.Telegram.WebApp.initData;
-        document.querySelector('#tg_body').innerHTML = authData.toString()
+        document.querySelector('#tg_body').innerHTML = JSON.stringify(authData);
         // fetch('auth', {
         //   method: 'POST',
         //   body: authData.toString()
