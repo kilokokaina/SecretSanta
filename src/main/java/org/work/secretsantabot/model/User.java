@@ -23,7 +23,7 @@ public class User {
     private String telegramUsername;
 
     @Column(nullable = false)
-    private int telegramChatId;
+    private long telegramChatId;
 
     private String authToken;
 
