@@ -45,8 +45,8 @@ public class SecretSantaBot implements SpringLongPollingBot, LongPollingSingleTh
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             String userName = update.getMessage().getChat().getUserName();
-            String userFirstname = update.getMessage().getUserShared().getFirstName();
-            String userLastname = update.getMessage().getUserShared().getLastName();
+            String userFirstname = update.getMessage().getChat().getFirstName();
+            String userLastname = update.getMessage().getChat().getLastName();
             long chatId = update.getMessage().getChatId();
 
             log.info("Username: {}, chat Id: {}, text: {}", userName, chatId, messageText);
