@@ -51,16 +51,18 @@ public class SecretSantaBot implements SpringLongPollingBot, LongPollingSingleTh
 
             log.info("Username: {}, chat Id: {}, text: {}", userName, chatId, messageText);
 
-            if (userService.findByUsername(userName) == null) {
-                var user = new User();
+            if (messageText.equals("/start")) {
+                if (userService.findByUsername(userName) == null) {
+                    var user = new User();
 
-                user.setTelegramFirstname(userFirstname);
-                user.setTelegramLastname(userLastname);
-                user.setTelegramUsername(userName);
-                user.setTelegramChatId(chatId);
-                userRepository.save(user);
+                    user.setTelegramFirstname(userFirstname);
+                    user.setTelegramLastname(userLastname);
+                    user.setTelegramUsername(userName);
+                    user.setTelegramChatId(chatId);
+                    userRepository.save(user);
 
-                log.info("User was created: {}", userName);
+                    log.info("User was created: {}", userName);
+                }
             }
 
             var message = SendMessage
