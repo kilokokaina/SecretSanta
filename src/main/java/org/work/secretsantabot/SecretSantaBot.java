@@ -1,8 +1,6 @@
 package org.work.secretsantabot;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
@@ -47,12 +45,17 @@ public class SecretSantaBot implements SpringLongPollingBot, LongPollingSingleTh
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             String userName = update.getMessage().getChat().getUserName();
+            String userFirstname = update.getMessage().getUserShared().getFirstName();
+            String userLastname = update.getMessage().getUserShared().getLastName();
             long chatId = update.getMessage().getChatId();
 
             log.info("Username: {}, chat Id: {}, text: {}", userName, chatId, messageText);
 
             if (userService.findByUsername(userName) == null) {
                 var user = new User();
+
+                user.setTelegramFirstname(userFirstname);
+                user.setTelegramLastname(userLastname);
                 user.setTelegramUsername(userName);
                 user.setTelegramChatId(chatId);
                 userRepository.save(user);

@@ -53,13 +53,6 @@ public class AuthServiceImpl implements AuthService {
 
         var user = userService.findByUsername(tgUserModel.getUsername());
 
-        if (!user.getTelegramFirstName().equals(tgUserModel.getFirst_name())) {
-            user.setTelegramFirstName(tgUserModel.getFirst_name());
-        }
-        if (!user.getTelegramSecondName().equals(tgUserModel.getLast_name())) {
-            user.setTelegramSecondName(tgUserModel.getLast_name());
-        }
-
         String authToken = UUID.randomUUID().toString();
         user.setAuthToken(authToken);
 
