@@ -17,7 +17,7 @@ public class Session {
 
     private boolean status;
 
-    private Date creationDate;
+    private Date creationDate = new Date();
 
     private String adminUserId;
 
