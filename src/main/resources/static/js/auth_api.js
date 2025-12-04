@@ -17,6 +17,7 @@ function getUser() {
         let telegramUserData = await response.json();
         console.log('User: ' + telegramUserData);
         document.querySelector('#hello-label').innerHTML = `Привет, ${telegramUserData.firstName}👋!`
+        getSessions();
     });
 }
 
@@ -27,6 +28,7 @@ function sendAuth() {
     }).then(async response => {
         let telegramUserData = await response.json();
         console.log('Auth success: ' + telegramUserData);
-        document.querySelector('#hello-label').innerHTML = `Привет, ${telegramUserData.firstName}👋!`
+        document.querySelector('#hello-label').innerHTML = `Привет, ${telegramUserData.firstName}👋!`;
+        getSessions();
     });
 }

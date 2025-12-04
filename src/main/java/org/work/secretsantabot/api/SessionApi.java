@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,8 @@ import org.work.secretsantabot.model.Session;
 import org.work.secretsantabot.service.AuthService;
 import org.work.secretsantabot.service.SessionService;
 import org.work.secretsantabot.service.UserService;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -41,6 +44,19 @@ public class SessionApi {
         session.setAdminUserId(userService.findByAuthToken(authToken).getUserId());
 
         return ResponseEntity.ok(sessionService.save(session));
+    }
+
+    @GetMapping("get_sessions")
+    public ResponseEntity<List<Session>> getSessions(HttpServletRequest request) {
+        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
+        if (!authService.checkAuth(authToken)) {
+            log.info("Request unauthorized");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return ResponseEntity.ok(sessionService.findAllByUsername(
+                userService.findByAuthToken(authToken).getUserId())
+        );
     }
 
 }
