@@ -15,7 +15,7 @@ public class Session {
     private String sessionId;
     private String sessionName;
 
-    private boolean status;
+    private boolean status = true;
 
     private Date creationDate = new Date();
 
