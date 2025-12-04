@@ -29,7 +29,7 @@ function getSessions() {
             sessionListHTML += `
                 <div class="session-item">
                     <div class="title">${sessionItem.sessionName}</div>
-                    <div class="status">${sessionItem.sessionStatus}</div>
+                    <div class="status">${sessionItem.status}</div>
                     <button class="btn btn-success">Посмотреть</button>
                 </div>
             `;
