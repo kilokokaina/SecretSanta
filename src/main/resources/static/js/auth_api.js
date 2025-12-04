@@ -1,6 +1,6 @@
 function checkAuth() {
     fetch('check_auth').then(async response => {
-        let isAuthValid = response.text();
+        let isAuthValid = await response.text();
         switch (isAuthValid) {
             case 'true':
                 getUser();
