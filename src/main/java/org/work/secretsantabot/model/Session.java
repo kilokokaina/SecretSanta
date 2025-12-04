@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
+import java.util.Date;
 
 @Data
 @Entity
@@ -17,7 +17,7 @@ public class Session {
 
     private boolean status;
 
-    private Time creationDate;
+    private Date creationDate;
 
     private String adminUserId;
 

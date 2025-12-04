@@ -22,20 +22,9 @@ public class AuthApi {
         this.authService = authService;
     }
 
-    private String getCookieValue(Cookie[] cookies, String name) {
-        String result = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(name)) {
-                result = cookie.getValue();
-            }
-        }
-
-        return result;
-    }
-
     @GetMapping("check_auth")
     public ResponseEntity<Boolean> checkAuth(HttpServletRequest request) {
-        String authCookie = getCookieValue(request.getCookies(), "session_token");
+        String authCookie = authService.getCookieValue(request.getCookies(), "session_token");
         if (authCookie == null) return ResponseEntity.ok(false);
 
         return ResponseEntity.ok(authService.checkAuth(authCookie));
@@ -43,7 +32,7 @@ public class AuthApi {
 
     @GetMapping("get_user")
     public ResponseEntity<TelegramUserResponse> getUser(HttpServletRequest request) {
-        String authCookie = getCookieValue(request.getCookies(), "session_token");
+        String authCookie = authService.getCookieValue(request.getCookies(), "session_token");
 
         var response = authService.getUser(authCookie);
         if (response == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);

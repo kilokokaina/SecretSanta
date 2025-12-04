@@ -1,5 +1,6 @@
 package org.work.secretsantabot.service.impl;
 
+import jakarta.servlet.http.Cookie;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,17 @@ public class AuthServiceImpl implements AuthService {
                 user.getTelegramLastname(),
                 user.getTelegramUsername()
         );
+    }
+
+    public String getCookieValue(Cookie[] cookies, String name) {
+        String result = null;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(name)) {
+                result = cookie.getValue();
+            }
+        }
+
+        return result;
     }
 
 }
