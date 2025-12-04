@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -26,6 +24,6 @@ public class User {
 
     private String authToken;
 
-    private Date authTokenExpireDate;
+    private long authTokenExpireDate;
 
 }

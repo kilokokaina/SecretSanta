@@ -1,15 +1,13 @@
 package org.work.secretsantabot.api;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.work.secretsantabot.dto.TelegramUserResponse;
 import org.work.secretsantabot.service.AuthService;
 
@@ -24,15 +22,45 @@ public class AuthApi {
         this.authService = authService;
     }
 
+    private String getCookieValue(Cookie[] cookies, String name) {
+        String result = null;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(name)) {
+                result = cookie.getValue();
+            }
+        }
+
+        return result;
+    }
+
+    @GetMapping("check_auth")
+    public ResponseEntity<Boolean> checkAuth(HttpServletRequest request) {
+        String authCookie = getCookieValue(request.getCookies(), "session_token");
+        if (authCookie == null) return ResponseEntity.ok(false);
+
+        return ResponseEntity.ok(authService.checkAuth(authCookie));
+    }
+
+    @GetMapping("get_user")
+    public ResponseEntity<TelegramUserResponse> getUser(HttpServletRequest request) {
+        String authCookie = getCookieValue(request.getCookies(), "session_token");
+
+        var response = authService.getUser(authCookie);
+        if (response == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("auth")
     public @ResponseBody ResponseEntity<TelegramUserResponse> auth(HttpServletResponse response, @RequestBody String body) {
         var authData = authService.auth(body);
-        var authToken = authData.keySet().stream().toList().get(0);
 
+        if (authData == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        var authToken = authData.keySet().stream().toList().get(0);
         var authCookie = new Cookie("session_token", authToken);
         authCookie.setPath("/");
         authCookie.setMaxAge(86400);
-
         response.addCookie(authCookie);
 
         return new ResponseEntity<>(authData.get(authToken), HttpStatus.OK);

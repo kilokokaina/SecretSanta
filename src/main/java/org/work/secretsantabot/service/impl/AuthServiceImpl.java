@@ -11,10 +11,7 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -44,32 +41,47 @@ public class AuthServiceImpl implements AuthService {
         String dataCheckString = dataString.substring(0, dataString.length() - 1);
         byte[] secretKey = new HmacUtils("HmacSHA256", "WebAppData").hmac("7788698179:AAEPrRzXhUt5onDNFauZcLTepOZzpBdvz88");
 
-        log.info("Is hash equals: {}", bodyParam.get("hash").equals(new HmacUtils("HmacSHA256", secretKey).hmacHex(dataCheckString)));
+        if (bodyParam.get("hash").equals(new HmacUtils("HmacSHA256", secretKey).hmacHex(dataCheckString))) {
 
-        var tgUserModel = new ObjectMapper().readValue(bodyParam.get("user"), TelegramUserModel.class);
-        log.info("User firstname = {}", tgUserModel.getFirst_name());
-        log.info("User lastname = {}", tgUserModel.getLast_name());
-        log.info("User username = {}", tgUserModel.getUsername());
+            var tgUserModel = new ObjectMapper().readValue(bodyParam.get("user"), TelegramUserModel.class);
+            var user = userService.findByUsername(tgUserModel.getUsername());
 
-        var user = userService.findByUsername(tgUserModel.getUsername());
+            String authToken = UUID.randomUUID().toString();
+            var tokenExpireDate = System.currentTimeMillis() + 86400;
 
-        String authToken = UUID.randomUUID().toString();
-        user.setAuthToken(authToken);
+            user.setAuthToken(authToken);
+            user.setAuthTokenExpireDate(tokenExpireDate);
+            userService.save(user);
 
-        var userResponse = new TelegramUserResponse(
-                tgUserModel.getFirst_name(),
-                tgUserModel.getLast_name(),
-                tgUserModel.getUsername()
-        );
+            var userResponse = new TelegramUserResponse(
+                    tgUserModel.getFirst_name(),
+                    tgUserModel.getLast_name(),
+                    tgUserModel.getUsername()
+            );
 
-        userService.save(user);
-
-        return Map.of(authToken, userResponse);
+            return Map.of(authToken, userResponse);
+        } else return null;
     }
 
     @Override
-    public boolean checkToken(String token) {
-        return false;
+    public boolean checkAuth(String token) {
+        var user = userService.findByAuthToken(token);
+
+        if (user == null) return false;
+        return user.getAuthTokenExpireDate() >= System.currentTimeMillis();
+    }
+
+    @Override
+    public TelegramUserResponse getUser(String token) {
+        var user = userService.findByAuthToken(token);
+
+        if (user == null) return null;
+
+        return new TelegramUserResponse(
+                user.getTelegramFirstname(),
+                user.getTelegramLastname(),
+                user.getTelegramUsername()
+        );
     }
 
 }
