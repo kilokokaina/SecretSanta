@@ -31,7 +31,10 @@ public class SessionApi {
     @PostMapping("new_session")
     public ResponseEntity<Session> newSession(HttpServletRequest request, @RequestBody String sessionName) {
         String authToken = authService.getCookieValue(request.getCookies(), "session_token");
-        if (!authService.checkAuth(authToken)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (!authService.checkAuth(authToken)) {
+            log.info("Request unauthorized");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         var session = new Session();
         session.setSessionName(sessionName);

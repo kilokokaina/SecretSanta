@@ -61,11 +61,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input class="form-control" type="text" placeholder="Название сессии">
+                        <input class="form-control" type="text" placeholder="Название сессии" id="session-name-input">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
-                        <button type="button" class="btn btn-primary">Создать</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createSession()">Создать</button>
                     </div>
                 </div>
             </div>
@@ -78,11 +78,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input class="form-control" type="text" placeholder="ID сессии" id="session-name-input">
+                        <input class="form-control" type="text" placeholder="ID сессии" id="session-id-input">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createSession()">Создать</button>
+                        <button type="button" class="btn btn-primary">Присоединиться</button>
                     </div>
                 </div>
             </div>
