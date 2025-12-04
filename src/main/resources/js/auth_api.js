@@ -15,7 +15,7 @@ function checkAuth() {
 function getUser() {
     fetch('get_user').then(async response => {
         let telegramUserData = await response.json();
-        console.log(telegramUserData);
+        console.log('User: ' + telegramUserData);
         document.querySelector('#hello-label').innerHTML = `Привет, ${telegramUserData.firstName}👋!`
     });
 }
@@ -26,7 +26,7 @@ function sendAuth() {
         body: window.Telegram.WebApp.initData
     }).then(async response => {
         let telegramUserData = await response.json();
-        console.log(telegramUserData);
+        console.log('Auth success: ' + telegramUserData);
         document.querySelector('#hello-label').innerHTML = `Привет, ${telegramUserData.firstName}👋!`
     });
 }
