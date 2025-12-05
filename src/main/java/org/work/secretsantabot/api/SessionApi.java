@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.work.secretsantabot.dto.JoinSessionDto;
 import org.work.secretsantabot.model.Session;
 import org.work.secretsantabot.model.SessionUserList;
@@ -33,6 +30,26 @@ public class SessionApi {
         this.sessionService = sessionService;
         this.userService = userService;
         this.authService = authService;
+    }
+
+    @GetMapping("get_sessions")
+    public ResponseEntity<Map<String, List<Session>>> getSessions(HttpServletRequest request) {
+        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
+        if (!authService.checkAuth(authToken)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        var result = new HashMap<String, List<Session>>();
+        result.put("admin", sessionService.findAllByUsername(userService.findByAuthToken(authToken).getUserId()));
+        result.put("user", sessionService.findAllByUserId(userService.findByAuthToken(authToken).getUserId()));
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("get_sessions/{sessionId}")
+    public ResponseEntity<Session> getSession(@PathVariable String sessionId) {
+        var session = sessionService.findById(sessionId);
+        if (session == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return ResponseEntity.ok(session);
     }
 
     @PostMapping("new_session")
@@ -60,18 +77,6 @@ public class SessionApi {
         sessionUserList.setStopList(joinSessionDto.getStopList());
 
         return ResponseEntity.ok(sessionService.joinSession(sessionUserList));
-    }
-
-    @GetMapping("get_sessions")
-    public ResponseEntity<Map<String, List<Session>>> getSessions(HttpServletRequest request) {
-        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
-        if (!authService.checkAuth(authToken)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
-        var result = new HashMap<String, List<Session>>();
-        result.put("admin", sessionService.findAllByUsername(userService.findByAuthToken(authToken).getUserId()));
-        result.put("user", sessionService.findAllByUserId(userService.findByAuthToken(authToken).getUserId()));
-
-        return ResponseEntity.ok(result);
     }
 
 }

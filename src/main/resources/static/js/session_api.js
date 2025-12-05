@@ -1,3 +1,5 @@
+let joinSessionBodyModal = new bootstrap.Modal(document.getElementById('joinSessionModalBody'));
+
 function createSession() {
     let sessionName = document.querySelector('#session-name-input').value;
     fetch('new_session', {
@@ -54,4 +56,12 @@ function getSessions() {
         document.querySelector('.admin-session-list').innerHTML = adminListHTML;
         document.querySelector('.participant-session-list').innerHTML = participantListHTML;
     });
+}
+
+function findSession() {
+    let sessionId = document.querySelector('#session-id-input').value;
+    fetch(`get_sessions/${sessionId}`).then(async response => {
+        let status = response.status;
+        if (status === 200) joinSessionBodyModal.show();
+    })
 }
