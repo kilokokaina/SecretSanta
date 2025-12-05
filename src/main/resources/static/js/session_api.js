@@ -1,3 +1,4 @@
+let joinSessionModal = new bootstrap.Modal(document.getElementById('joinSessionModal'));
 let joinSessionBodyModal = new bootstrap.Modal(document.getElementById('joinSessionModalBody'));
 
 function createSession() {
@@ -61,6 +62,9 @@ function getSessions() {
 function findSession() {
     let sessionId = document.querySelector('#session-id-input').value;
     fetch(`get_sessions/${sessionId}`).then(async response => {
-        if (response.status === 200) joinSessionBodyModal.show();
+        if (response.status === 200) {
+            joinSessionModal.hide()
+            joinSessionBodyModal.show();
+        }
     })
 }
