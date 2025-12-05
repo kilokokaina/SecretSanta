@@ -82,7 +82,35 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
-                        <button type="button" class="btn btn-primary">Присоединиться</button>
+                        <button type="button" class="btn btn-primary" data-bs-target="#joinSessionModalBody" data-bs-toggle="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="joinSessionModalBody" aria-hidden="true" aria-labelledby="joinSessionModalBody" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Введите данные для участия</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea2" class="form-label">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Присоединиться</button>
                     </div>
                 </div>
             </div>

@@ -27,8 +27,8 @@ function getSessions() {
         let adminList = sessionResponse.admin;
         let participantList = sessionResponse.user;
 
-
         let adminListHTML = document.querySelector('.admin-session-list').innerHTML;
+        if (adminList.length > 0) adminListHTML = '';
         adminList.forEach(adminItem => {
             adminListHTML += `
                 <div class="session-item">
@@ -38,7 +38,9 @@ function getSessions() {
                 </div>
             `;
         });
+
         let participantListHTML = document.querySelector('.participant-session-list').innerHTML;
+        if (participantList.length > 0) participantListHTML = '';
         participantList.forEach(participantItem => {
             participantListHTML += `
                 <div class="session-item">
