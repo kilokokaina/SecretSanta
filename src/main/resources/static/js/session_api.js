@@ -7,7 +7,7 @@ function createSession() {
         let sessionItem = await response.json();
         console.log(sessionItem);
 
-        let sessionList = document.querySelector('.session-list').innerHTML;
+        let sessionList = document.querySelector('.admin-session-list').innerHTML;
         sessionList = `
             <div class="session-item">
                 <div class="title">${sessionItem.sessionName}</div>
@@ -24,7 +24,7 @@ function getSessions() {
         let sessionList = await response.json();
         console.log(sessionList);
 
-        let sessionListHTML = document.querySelector('.session-list').innerHTML;
+        let sessionListHTML = document.querySelector('.admin-session-list').innerHTML;
         sessionList.forEach(sessionItem => {
             sessionListHTML += `
                 <div class="session-item">

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface SessionRepository extends JpaRepository<Session, String> {
 
-    List<Session> findBySessionId(String sessionId);
+    Session findBySessionId(String sessionId);
+    List<Session> findByAdminUserId(String adminUserId);
 
 }

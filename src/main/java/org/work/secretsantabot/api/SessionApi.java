@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.work.secretsantabot.dto.JoinSessionDto;
 import org.work.secretsantabot.model.Session;
+import org.work.secretsantabot.model.SessionUserList;
 import org.work.secretsantabot.service.AuthService;
 import org.work.secretsantabot.service.SessionService;
 import org.work.secretsantabot.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -34,10 +38,7 @@ public class SessionApi {
     @PostMapping("new_session")
     public ResponseEntity<Session> newSession(HttpServletRequest request, @RequestBody String sessionName) {
         String authToken = authService.getCookieValue(request.getCookies(), "session_token");
-        if (!authService.checkAuth(authToken)) {
-            log.info("Request unauthorized");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        if (!authService.checkAuth(authToken)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         var session = new Session();
         session.setSessionName(sessionName);
@@ -46,17 +47,31 @@ public class SessionApi {
         return ResponseEntity.ok(sessionService.save(session));
     }
 
-    @GetMapping("get_sessions")
-    public ResponseEntity<List<Session>> getSessions(HttpServletRequest request) {
+    @PostMapping("join_session")
+    public ResponseEntity<Session> joinSession(HttpServletRequest request, @RequestBody JoinSessionDto joinSessionDto) {
         String authToken = authService.getCookieValue(request.getCookies(), "session_token");
-        if (!authService.checkAuth(authToken)) {
-            log.info("Request unauthorized");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        if (!authService.checkAuth(authToken)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
-        return ResponseEntity.ok(sessionService.findAllByUsername(
-                userService.findByAuthToken(authToken).getUserId())
-        );
+        var sessionUserList = new SessionUserList();
+        sessionUserList.setUserId(userService.findByAuthToken(authToken).getUserId());
+        sessionUserList.setSessionId(sessionService.findById(joinSessionDto.getSessionId()).getSessionId());
+        sessionUserList.setUserNickname(joinSessionDto.getUserNickname());
+        sessionUserList.setWishList(joinSessionDto.getWishList());
+        sessionUserList.setStopList(joinSessionDto.getStopList());
+
+        return ResponseEntity.ok(sessionService.joinSession(sessionUserList));
+    }
+
+    @GetMapping("get_sessions")
+    public ResponseEntity<Map<String, List<Session>>> getSessions(HttpServletRequest request) {
+        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
+        if (!authService.checkAuth(authToken)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        var result = new HashMap<String, List<Session>>();
+        result.put("admin", sessionService.findAllByUsername(userService.findByAuthToken(authToken).getUserId()));
+        result.put("user", sessionService.findAllByUserId(userService.findByAuthToken(authToken).getUserId()));
+
+        return ResponseEntity.ok(result);
     }
 
 }
