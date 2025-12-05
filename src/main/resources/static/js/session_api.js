@@ -21,19 +21,35 @@ function createSession() {
 
 function getSessions() {
     fetch('get_sessions').then(async response => {
-        let sessionList = await response.json();
-        console.log(sessionList);
+        let sessionResponse = await response.json();
+        console.log(sessionResponse);
 
-        let sessionListHTML = document.querySelector('.admin-session-list').innerHTML;
-        sessionList.forEach(sessionItem => {
-            sessionListHTML += `
+        let adminList = sessionResponse.admin;
+        let participantList = sessionResponse.user;
+
+
+        let adminListHTML = document.querySelector('.admin-session-list').innerHTML;
+        adminList.forEach(adminItem => {
+            adminListHTML += `
                 <div class="session-item">
-                    <div class="title">${sessionItem.sessionName}</div>
-                    <div class="status">${sessionItem.status}</div>
+                    <div class="title">${adminItem.sessionName}</div>
+                    <div class="status">${adminItem.status}</div>
                     <button class="btn btn-success">Посмотреть</button>
                 </div>
             `;
         });
-        document.querySelector('.session-list').innerHTML = sessionListHTML;
+        let participantListHTML = document.querySelector('.participant-session-list').innerHTML;
+        participantList.forEach(participantItem => {
+            participantListHTML += `
+                <div class="session-item">
+                    <div class="title">${participantItem.sessionName}</div>
+                    <div class="status">${participantItem.status}</div>
+                    <button class="btn btn-success">Посмотреть</button>
+                </div>
+            `;
+        });
+
+        document.querySelector('.admin-session-list').innerHTML = adminListHTML;
+        document.querySelector('.participant-session-list').innerHTML = participantListHTML;
     });
 }
