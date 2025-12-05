@@ -38,7 +38,7 @@ public class SessionServiceImpl implements SessionService {
         var sessions = new ArrayList<Session>();
 
         for (var sessionId : sessionIds) {
-            sessions.add(sessionRepository.findById(sessionId).orElse(null));
+            sessions.add(sessionRepository.findBySessionId(sessionId));
         }
 
         return sessions;
@@ -58,7 +58,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session findById(String sessionId) {
-        return sessionRepository.findById(sessionId).orElse(null);
+        return sessionRepository.findBySessionId(sessionId);
     }
 
     @Override
