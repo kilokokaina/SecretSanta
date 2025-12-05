@@ -61,7 +61,6 @@ function getSessions() {
 function findSession() {
     let sessionId = document.querySelector('#session-id-input').value;
     fetch(`get_sessions/${sessionId}`).then(async response => {
-        let status = response.status;
-        if (status === 200) joinSessionBodyModal.show();
+        if (response.status === 200) joinSessionBodyModal.show();
     })
 }
