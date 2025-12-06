@@ -37,28 +37,19 @@ public class SessionServiceImpl implements SessionService {
         var sessionIds = sulRepository.findSessionIdByUserId(userId);
         var sessions = new ArrayList<Session>();
 
-        for (var sessionId : sessionIds) {
-            sessions.add(sessionRepository.findBySessionId(sessionId));
-        }
+        for (var sessionId : sessionIds) sessions.add(sessionRepository.findBySessionId(sessionId));
 
         return sessions;
     }
 
     @Override
-    public List<User> findAllUsersBySessionId(String sessionId) {
-        var userIds = sulRepository.findUserIdBySessionId(sessionId);
-        var users = new ArrayList<User>();
-
-        for (var userId : userIds) {
-            users.add(userService.findByUserId(userId));
-        }
-
-        return users;
+    public List<SessionUserList> getSessionUserList(String sessionId) {
+        return sulRepository.findBySessionId(sessionId);
     }
 
     @Override
-    public List<SessionUserList> getSessionUserList(String sessionId) {
-        return sulRepository.findBySessionId(sessionId);
+    public SessionUserList findByUserIdAndSessionId(String userId, String sessionId) {
+        return sulRepository.findByUserIdAndSessionId(userId, sessionId);
     }
 
     @Override

@@ -48,16 +48,9 @@ public class SessionApi {
     @GetMapping("get_sessions/{sessionId}")
     public ResponseEntity<Session> getSession(@PathVariable String sessionId) {
         var session = sessionService.findById(sessionId);
-        log.info("Session: {}", session);
-
         if (session == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return ResponseEntity.ok(session);
-    }
-
-    @GetMapping("get_session_users/{sessionId}")
-    public ResponseEntity<List<SessionUserList>> getSessionUsers(HttpServletRequest request, @PathVariable String sessionId) {
-        return ResponseEntity.ok(sessionService.getSessionUserList(sessionId));
     }
 
     @PostMapping("new_session")

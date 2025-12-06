@@ -99,14 +99,6 @@ function joinSession() {
     });
 }
 
-function getSessionUsers() {
-    let sessionId = document.querySelector('#session-id').innerHTML;
-    fetch(`/get_session_users/${sessionId}`).then(async response => {
-        let sulList = await response.json();
-        console.log(sulList);
-    })
-}
-
 async function copyToClipboard() {
     let sessionId = document.querySelector('#session-id').innerHTML;
     const type = "text/plain";

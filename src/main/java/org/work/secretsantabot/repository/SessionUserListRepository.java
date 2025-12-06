@@ -10,10 +10,7 @@ public interface SessionUserListRepository extends JpaRepository<SessionUserList
 
     @Query(value = "SELECT session_id FROM session_user_list WHERE user_id = %:userId%", nativeQuery = true)
     List<String> findSessionIdByUserId(String userId);
-
-    @Query(value = "SELECT user_id FROM session_user_list WHERE session_id = %:sessionId%", nativeQuery = true)
-    List<String> findUserIdBySessionId(String sessionId);
-
     List<SessionUserList> findBySessionId(String sessionId);
+    SessionUserList findByUserIdAndSessionId(String userId, String sessionId);
 
 }

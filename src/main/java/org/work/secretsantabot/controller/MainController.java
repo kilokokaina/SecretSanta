@@ -35,12 +35,14 @@ public class MainController {
         String userId = userService.findByAuthToken(authToken).getUserId();
 
         var session = sessionService.findById(sessionId);
+        var userForm = sessionService.findByUserIdAndSessionId(userId, sessionId);
 
         model.addAttribute("sessionName", session.getSessionName());
         model.addAttribute("sessionId", session.getSessionId());
         model.addAttribute("creationDate", session.getCreationDate());
         model.addAttribute("status", session.isStatus());
         model.addAttribute("isAdmin", (session.getAdminUserId().equals(userId)));
+        model.addAttribute("userForm", sessionService.findByUserIdAndSessionId(userId, sessionId));
         if (session.getAdminUserId().equals(userId)) {
             model.addAttribute("sessionUsers", sessionService.getSessionUserList(sessionId));
         }
