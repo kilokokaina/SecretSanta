@@ -25,7 +25,11 @@ public class MainController {
     @GetMapping("session/{sessionId}")
     public String session(@PathVariable String sessionId, Model model) {
         var session = sessionService.findById(sessionId);
-        model.addAttribute("session", session);
+
+        model.addAttribute("sessionName", session.getSessionName());
+        model.addAttribute("sessionId", session.getSessionId());
+        model.addAttribute("creationDate", session.getCreationDate());
+        model.addAttribute("status", session.isStatus());
 
         return "session";
     }

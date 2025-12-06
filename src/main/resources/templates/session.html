@@ -71,10 +71,10 @@
     </head>
     <body>
         <div class="container">
-            <div class="session-title" th:text="${session.getSessionName}">Название сессии</div>
+            <div class="session-title" th:text="${sessionName}">Название сессии</div>
             <div class="session-info">
-                <div th:text="${session}">Дата</div>
-                <div class="status" th:text="${session}">Статус</div>
+                <div th:text="${creationDate}">Дата</div>
+                <div class="status" th:text="${status}">Статус</div>
             </div>
 
             <!-- Кнопка с использованием Bootstrap -->
