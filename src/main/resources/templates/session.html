@@ -105,11 +105,12 @@
     <body>
         <p hidden="hidden" th:text="${sessionId}" id="session-id"></p>
         <div class="container">
+            <a th:href="@{/}">Назад</a>
             <div class="session-title" th:text="${sessionName}">Название сессии</div>
             <div class="session-info">
                 <div th:text="${creationDate}">Дата</div>
-                <div class="status" th:if="${status}">Открыта</div>
-                <div class="status" th:unless="${status}">Приём окончен</div>
+                <div class="status" th:if="${status}">🔓</div>
+                <div class="status" th:unless="${status}">🔒</div>
             </div>
 
             <!-- Кнопка с использованием Bootstrap -->

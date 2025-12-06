@@ -33,7 +33,7 @@ function getSessions() {
         let adminListHTML = document.querySelector('.admin-session-list').innerHTML;
         if (adminList.length > 0) adminListHTML = '';
         adminList.forEach(adminItem => {
-            let sessionStatus = (adminItem.status) ? 'Открыта' : 'Приём окончен';
+            let sessionStatus = (adminItem.status) ? '🔓' : '🔒';
             adminListHTML += `
                 <div class="session-item">
                     <div class="title">${adminItem.sessionName}</div>
@@ -46,7 +46,7 @@ function getSessions() {
         let participantListHTML = document.querySelector('.participant-session-list').innerHTML;
         if (participantList.length > 0) participantListHTML = '';
         participantList.forEach(participantItem => {
-            let sessionStatus = (participantItem.status) ? 'Открыта' : 'Приём окончен';
+            let sessionStatus = (participantItem.status) ? '🔓' : '🔒';
             participantListHTML += `
                 <div class="session-item">
                     <div class="title">${participantItem.sessionName}</div>
