@@ -12,6 +12,7 @@ public interface SessionUserListRepository extends JpaRepository<SessionUserList
     List<String> findSessionIdByUserId(String userId);
     List<SessionUserList> findBySessionId(String sessionId);
     SessionUserList findByUserIdAndSessionId(String userId, String sessionId);
+    @Query(value = "DELETE FROM session_user_list WHERE session_id = %:sessionId% AND %:userId%", nativeQuery = true)
     void deleteByUserIdAndSessionId(String sessionId, String userId);
 
 }
