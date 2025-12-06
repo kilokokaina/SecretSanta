@@ -45,10 +45,11 @@ function getSessions() {
         let participantListHTML = document.querySelector('.participant-session-list').innerHTML;
         if (participantList.length > 0) participantListHTML = '';
         participantList.forEach(participantItem => {
+            let sessionStatus = (participantItem.status) ? 'Открыта' : 'Приём окончен';
             participantListHTML += `
                 <div class="session-item">
                     <div class="title">${participantItem.sessionName}</div>
-                    <div class="status">${participantItem.status}</div>
+                    <div class="status">${sessionStatus}</div>
                     <button class="btn btn-success" onclick="location.href='session/${participantItem.sessionId}'">Посмотреть</button>
                 </div>
             `;
@@ -97,6 +98,13 @@ function joinSession() {
         ` + sessionList;
         document.querySelector('.participant-session-list').innerHTML = sessionList;
     });
+}
+
+function changeStatus() {
+    let sessionId = document.querySelector('#session-id').innerHTML;
+    fetch(`/change_status/${sessionId}`, { method: 'PUT' }).then(async response => {
+        if (response.status === 200) location.reload();
+    })
 }
 
 async function copyToClipboard() {

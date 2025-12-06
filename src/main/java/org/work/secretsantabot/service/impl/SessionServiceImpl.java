@@ -58,11 +58,6 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public boolean changeStatus(String sessionId, boolean status) {
-        return false;
-    }
-
-    @Override
     public Session joinSession(SessionUserList sessionUserList) {
         sulRepository.save(sessionUserList);
         return sessionRepository.findById(sessionUserList.getSessionId()).orElse(null);

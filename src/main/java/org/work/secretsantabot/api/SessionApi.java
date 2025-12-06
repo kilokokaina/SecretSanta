@@ -80,4 +80,20 @@ public class SessionApi {
         return ResponseEntity.ok(sessionService.joinSession(sessionUserList));
     }
 
+    @PutMapping("change_status/{sessionId}")
+    public ResponseEntity<HttpStatus> changeStatus(@PathVariable String sessionId, HttpServletRequest request) {
+        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
+
+        var session = sessionService.findById(sessionId);
+        if (session == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!session.getAdminUserId().equals(userService.findByAuthToken(authToken).getUserId())) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        session.setStatus(!session.isStatus());
+        sessionService.save(session);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
 }

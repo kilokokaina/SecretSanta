@@ -113,9 +113,11 @@
             </div>
 
             <!-- Кнопка с использованием Bootstrap -->
-            <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && status}">Закончить регистрацию</button>
-            <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && !status}">Открыть регистрацию</button>
-            <button class="btn btn-success w-100 mt-2" type="button" onclick="copyToClipboard()">Скопировать ID сессии</button>
+            <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && status}" onclick="changeStatus()">Закончить регистрацию</button>
+            <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && !status}" onclick="changeStatus()">Открыть регистрацию</button>
+
+            <button class="btn btn-success w-100 mt-2" type="button" th:if="${isAdmin && status}" onclick="copyToClipboard()">Скопировать ID сессии</button>
+            <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && !status}">Начать рассылку</button>
 
             <div class="participant-block" th:if="${userForm} != null">
                 <div class="participants-title">Моя анкета</div>
