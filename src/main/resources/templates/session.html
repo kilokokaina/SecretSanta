@@ -110,10 +110,10 @@
             <div class="session-info">
                 <div th:text="${creationDate}">Дата</div>
                 <div class="status" th:if="${status}">
-                    <img th:src="@{/img/open.png}">
+                    <img th:src="@{/img/open.png}" width="28" height="28">
                 </div>
                 <div class="status" th:unless="${status}">
-                    <img th:src="@{/img/close.png}">
+                    <img th:src="@{/img/close.png}" width="28" height="28">
                 </div>
             </div>
 
