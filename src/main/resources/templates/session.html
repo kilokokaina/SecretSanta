@@ -109,8 +109,12 @@
             <div class="session-title"th:text="${sessionName}">Название сессии</div>
             <div class="session-info">
                 <div th:text="${creationDate}">Дата</div>
-                <div class="status" th:if="${status}">🔓</div>
-                <div class="status" th:unless="${status}">🔒</div>
+                <div class="status" th:if="${status}">
+                    <img th:src="@{/img/open.png}">
+                </div>
+                <div class="status" th:unless="${status}">
+                    <img th:src="@{/img/close.png}">
+                </div>
             </div>
 
             <!-- Кнопка с использованием Bootstrap -->
