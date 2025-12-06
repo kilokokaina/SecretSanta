@@ -100,8 +100,19 @@ function joinSession() {
 }
 
 function getSessionUsers() {
-    fetch('get_session_users/').then(async response => {
+    let sessionId = document.querySelector('#session-id').innerHTML;
+    fetch(`get_session_users/${sessionId}`).then(async response => {
         let sulList = await response.json();
         console.log(sulList);
     })
+}
+
+async function copyToClipboard() {
+    let sessionId = document.querySelector('#session-id').innerHTML;
+    const type = "text/plain";
+    const clipboardItemData = {
+        [type]: sessionId,
+    };
+    const clipboardItem = new ClipboardItem(clipboardItemData);
+    await navigator.clipboard.write([clipboardItem]);
 }
