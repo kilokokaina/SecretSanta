@@ -11,10 +11,11 @@ function createSession() {
         console.log(sessionItem);
 
         let sessionList = document.querySelector('.admin-session-list').innerHTML;
+        if (sessionList === 'Пока пусто...') sessionList = '';
         sessionList = `
             <div class="session-item">
                 <div class="title">${sessionItem.sessionName}</div>
-                <div class="status">${sessionItem.status}</div>
+                <div class="status"><img src="/img/open.png" width="28" height="28"></div>
                 <button class="btn btn-success" onclick="location.href='session/${sessionItem.sessionId}'">Посмотреть</button>
             </div>
         ` + sessionList;
@@ -90,10 +91,12 @@ function joinSession() {
         console.log(sessionItem);
 
         let sessionList = document.querySelector('.participant-session-list').innerHTML;
+        if (sessionList === 'Пока пусто...') sessionList = '';
+        let sessionStatus = (sessionItem.status) ? '<img src="/img/open.png" width="28" height="28">' : '<img src="/img/close.png" width="28" height="28">';
         sessionList = `
             <div class="session-item">
                 <div class="title">${sessionItem.sessionName}</div>
-                <div class="status">${sessionItem.status}</div>
+                <div class="status">${sessionStatus}</div>
                 <button class="btn btn-success" onclick="location.href='session/${sessionItem.sessionId}'">Посмотреть</button>
             </div>
         ` + sessionList;
