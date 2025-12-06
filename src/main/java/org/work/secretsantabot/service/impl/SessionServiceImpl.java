@@ -75,6 +75,6 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void deleteSessionUserList(String sessionId, String userId) {
-        sulRepository.deleteByUserIdAndSessionId(userId, sessionId);
+        sulRepository.deleteByUserIdAndSessionId(sessionId, userId);
     }
 }
