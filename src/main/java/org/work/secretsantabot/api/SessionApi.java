@@ -96,4 +96,33 @@ public class SessionApi {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PutMapping("change_session_form/{sessionId}")
+    public ResponseEntity<SessionUserList> changeSessionForm(
+            @PathVariable String sessionId, HttpServletRequest request, @RequestBody JoinSessionDto joinSessionDto) {
+        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
+
+        var userForm = sessionService.findByUserIdAndSessionId(userService.findByAuthToken(authToken).getUserId(), sessionId);
+        if (userForm == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        userForm.setUserNickname(joinSessionDto.getUserNickname());
+        userForm.setWishList(joinSessionDto.getWishList());
+        userForm.setStopList(joinSessionDto.getStopList());
+
+        return ResponseEntity.ok(sessionService.updateSessionUserList(userForm));
+    }
+
+    @DeleteMapping("delete_user_from_session/{sessionId}")
+    public ResponseEntity<HttpStatus> deleteUserFromSession(
+            @PathVariable String sessionId, HttpServletRequest request, @RequestParam(value = "user_id") String userId) {
+        String authToken = authService.getCookieValue(request.getCookies(), "session_token");
+
+        var session = sessionService.findById(sessionId);
+        if (!session.getAdminUserId().equals(userService.findByAuthToken(authToken).getUserId())) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        sessionService.deleteSessionUserList(sessionId, userId);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
 }

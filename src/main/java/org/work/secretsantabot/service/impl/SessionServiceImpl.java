@@ -64,8 +64,17 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    public SessionUserList updateSessionUserList(SessionUserList sessionUserList) {
+        return sulRepository.save(sessionUserList);
+    }
+
+    @Override
     public Session save(Session session) {
         return sessionRepository.save(session);
     }
 
+    @Override
+    public void deleteSessionUserList(String sessionId, String userId) {
+        sulRepository.deleteByUserIdAndSessionId(userId, sessionId);
+    }
 }

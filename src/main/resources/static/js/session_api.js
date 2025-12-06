@@ -68,7 +68,7 @@ function findSession() {
             joinSessionModal.hide()
             joinSessionBodyModal.show();
         }
-    })
+    });
 }
 
 function joinSession() {
@@ -105,6 +105,45 @@ function changeStatus() {
     let sessionId = document.querySelector('#session-id').innerHTML;
     fetch(`/change_status/${sessionId}`, { method: 'PUT' }).then(async response => {
         if (response.status === 200) location.reload();
+    });
+}
+
+function updateUserForm() {
+    let sessionId = document.querySelector('#session-id').innerHTML;
+    let sessionBody = {
+        sessionId: sessionId,
+        userNickname: document.querySelector('#userNickname').value,
+        wishList: document.querySelector('#wishList').value,
+        stopList: document.querySelector('#stopList').value,
+    };
+
+    fetch(`/change_session_form/${sessionId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sessionBody)
+    }).then(async response => {
+        let sessionItem = await response.json();
+        console.log(sessionItem);
+
+        document.querySelector('#form-nickname').innerHTML = sessionItem.userNickname;
+        document.querySelector('#form-wishlist').innerHTML = sessionItem.wishList;
+        document.querySelector('#form-stoplist').innerHTML = sessionItem.stopList;
+    });
+}
+
+function deleteUserFromSession(element) {
+    let sessionId = document.querySelector('#session-id').innerHTML;
+    let userId = element.id;
+    console.log(userId);
+
+    fetch(`/delete_user_from_session/${sessionId}?user_id=${userId}`, {
+        method: 'DELETE'
+    }).then(async response => {
+        if (response.status === 200) {
+            document.querySelector(`#${userId}-item`).remove();
+        }
     })
 }
 

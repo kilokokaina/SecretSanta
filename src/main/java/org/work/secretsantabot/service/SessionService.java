@@ -14,5 +14,7 @@ public interface SessionService {
     Session save(Session session);
     List<SessionUserList> getSessionUserList(String sessionId);
     SessionUserList findByUserIdAndSessionId(String userId, String sessionId);
+    SessionUserList updateSessionUserList(SessionUserList sessionUserList);
+    void deleteSessionUserList(String sessionId, String userId);
 
 }
