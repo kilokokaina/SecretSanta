@@ -77,7 +77,7 @@ function joinSession() {
         stopList: document.querySelector('#stopList').value,
     };
 
-    fetch('new_session', {
+    fetch('join_session', {
         method: 'POST',
         body: JSON.stringify(sessionBody)
     }).then(async response => {
