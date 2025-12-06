@@ -33,10 +33,11 @@ function getSessions() {
         let adminListHTML = document.querySelector('.admin-session-list').innerHTML;
         if (adminList.length > 0) adminListHTML = '';
         adminList.forEach(adminItem => {
+            let sessionStatus = (adminItem.status) ? 'Открыта' : 'Приём окончен';
             adminListHTML += `
                 <div class="session-item">
                     <div class="title">${adminItem.sessionName}</div>
-                    <div class="status">${adminItem.status}</div>
+                    <div class="status">${sessionStatus}</div>
                     <button class="btn btn-success" onclick="location.href='session/${adminItem.sessionId}'">Посмотреть</button>
                 </div>
             `;
