@@ -67,6 +67,39 @@
                 flex: 1;
                 color: #2C2F33;
             }
+
+            .participant-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 5px;
+                padding-bottom: 1px;
+            }
+
+            .details {
+                /* Скрыто по умолчанию */
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 1px solid #E9ECEF;
+            }
+
+            .detail-label {
+                font-weight: 500;
+                color: #495057;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+
+            .detail-content {
+                color: #2C2F33;
+                line-height: 1.5;
+                margin-bottom: 10px;
+            }
+
+            .no-data {
+                color: #6C757D;
+                font-style: italic;
+            }
         </style>
     </head>
     <body>
@@ -86,11 +119,16 @@
 
             <div class="participant-block" th:if="${userForm} != null">
                 <div class="participants-title">Моя анкета</div>
-                <div class="participant-list">
-                    <div class="participant-item">
-                        <div class="participant-name" th:text="${userForm.getUserNickname()}">Псевдоним</div>
-                        <div class="participant-name" th:text="${userForm.getWishList()}">Пожелания</div>
-                        <div class="participant-name" th:text="${userForm.getStopList()}">Стоп-лист</div>
+                <div class="participant-card">
+                    <div class="participant-header">
+                        <div class="nickname" th:text="${userForm.getUserNickname()}"></div>
+                        <button class="btn btn-primary btn-sm" type="button" th:if="${status}">Изменить</button>
+                    </div>
+                    <div class="details">
+                        <div class="detail-label">Вишлист:</div>
+                        <div class="detail-content" th:text="${userForm.getWishList()}"></div>
+                        <div class="detail-label">Стоп‑лист:</div>
+                        <div class="detail-content no-data" th:text="${userForm.getStopList()}">Нет ограничений</div>
                     </div>
                 </div>
             </div>
