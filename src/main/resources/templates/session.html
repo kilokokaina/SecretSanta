@@ -82,7 +82,7 @@
             <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && !status}">Открыть регистрацию</button>
             <button class="btn btn-success w-100 mt-2" type="button">Скопировать ID сессии</button>
 
-            <div class="participant-block" th:if="${isAdmin}">
+            <div class="participant-block" th:if="${isAdmin}" onload="getSessionUsers()">
                 <div class="participants-title">Участники</div>
                 <div class="participant-list">
                     Тут пока никого...

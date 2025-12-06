@@ -57,6 +57,11 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    public List<SessionUserList> getSessionUserList(String sessionId) {
+        return sulRepository.findBySessionId(sessionId);
+    }
+
+    @Override
     public Session findById(String sessionId) {
         return sessionRepository.findBySessionId(sessionId);
     }

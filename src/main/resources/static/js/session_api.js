@@ -98,3 +98,10 @@ function joinSession() {
         document.querySelector('.participant-session-list').innerHTML = sessionList;
     });
 }
+
+function getSessionUsers() {
+    fetch('get_session_users/').then(async response => {
+        let sulList = await response.json();
+        console.log(sulList);
+    })
+}

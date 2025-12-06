@@ -15,5 +15,6 @@ public interface SessionService {
     boolean changeStatus(String sessionId, boolean status);
     Session joinSession(SessionUserList sessionUserList);
     Session save(Session session);
+    List<SessionUserList> getSessionUserList(String sessionId);
 
 }

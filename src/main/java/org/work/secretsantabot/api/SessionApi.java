@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.work.secretsantabot.dto.JoinSessionDto;
 import org.work.secretsantabot.model.Session;
 import org.work.secretsantabot.model.SessionUserList;
+import org.work.secretsantabot.model.User;
 import org.work.secretsantabot.service.AuthService;
 import org.work.secretsantabot.service.SessionService;
 import org.work.secretsantabot.service.UserService;
@@ -55,9 +56,8 @@ public class SessionApi {
     }
 
     @GetMapping("get_session_users/{sessionId}")
-    public ResponseEntity<List<String>> getSessionUsers(HttpServletRequest request, @PathVariable String sessionId) {
-        var users = sessionService.findAllUsersBySessionId(sessionId);
-        return null;
+    public ResponseEntity<List<SessionUserList>> getSessionUsers(HttpServletRequest request, @PathVariable String sessionId) {
+        return ResponseEntity.ok(sessionService.getSessionUserList(sessionId));
     }
 
     @PostMapping("new_session")
