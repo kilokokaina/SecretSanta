@@ -46,7 +46,7 @@ function getSessions() {
         let participantListHTML = document.querySelector('.participant-session-list').innerHTML;
         if (participantList.length > 0) participantListHTML = '';
         participantList.forEach(participantItem => {
-            let sessionStatus = (participantItem.status) ? '<img th:src="@{/img/open.png}" width="28" height="28">' : '<img th:src="@{/img/close.png}" width="28" height="28">';
+            let sessionStatus = (participantItem.status) ? '<img src="/img/open.png" width="28" height="28">' : '<img th:src="/img/close.png" width="28" height="28">';
             participantListHTML += `
                 <div class="session-item">
                     <div class="title">${participantItem.sessionName}</div>
