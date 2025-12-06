@@ -14,7 +14,7 @@ function createSession() {
         sessionList = `
             <div class="session-item">
                 <div class="title">${sessionItem.sessionName}</div>
-                <div class="status">${sessionItem.sessionStatus}</div>
+                <div class="status">${sessionItem.status}</div>
                 <button class="btn btn-success">Посмотреть</button>
             </div>
         ` + sessionList;
@@ -67,4 +67,31 @@ function findSession() {
             joinSessionBodyModal.show();
         }
     })
+}
+
+function joinSession() {
+    let sessionBody = {
+        sessionId: document.querySelector('#session-id-input').value,
+        userNickname: document.querySelector('#userNickname').value,
+        wishList: document.querySelector('#wishList').value,
+        stopList: document.querySelector('#stopList').value,
+    };
+
+    fetch('new_session', {
+        method: 'POST',
+        body: JSON.stringify(sessionBody)
+    }).then(async response => {
+        let sessionItem = await response.json();
+        console.log(sessionItem);
+
+        let sessionList = document.querySelector('.participant-session-list').innerHTML;
+        sessionList = `
+            <div class="session-item">
+                <div class="title">${sessionItem.sessionName}</div>
+                <div class="status">${sessionItem.status}</div>
+                <button class="btn btn-success">Посмотреть</button>
+            </div>
+        ` + sessionList;
+        document.querySelector('.session-list').innerHTML = sessionList;
+    });
 }
