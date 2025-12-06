@@ -3,7 +3,7 @@ let joinSessionBodyModal = new bootstrap.Modal(document.getElementById('joinSess
 
 function createSession() {
     let sessionName = document.querySelector('#session-name-input').value;
-    fetch('new_session', {
+    fetch('/new_session', {
         method: 'POST',
         body: sessionName
     }).then(async response => {
@@ -23,7 +23,7 @@ function createSession() {
 }
 
 function getSessions() {
-    fetch('get_sessions').then(async response => {
+    fetch('/get_sessions').then(async response => {
         let sessionResponse = await response.json();
         console.log(sessionResponse);
 
@@ -61,7 +61,7 @@ function getSessions() {
 
 function findSession() {
     let sessionId = document.querySelector('#session-id-input').value;
-    fetch(`get_sessions/${sessionId}`).then(async response => {
+    fetch(`/get_sessions/${sessionId}`).then(async response => {
         if (response.status === 200) {
             joinSessionModal.hide()
             joinSessionBodyModal.show();
@@ -77,7 +77,7 @@ function joinSession() {
         stopList: document.querySelector('#stopList').value,
     };
 
-    fetch('join_session', {
+    fetch('/join_session', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -101,7 +101,7 @@ function joinSession() {
 
 function getSessionUsers() {
     let sessionId = document.querySelector('#session-id').innerHTML;
-    fetch(`get_session_users/${sessionId}`).then(async response => {
+    fetch(`/get_session_users/${sessionId}`).then(async response => {
         let sulList = await response.json();
         console.log(sulList);
     })
