@@ -120,7 +120,7 @@ public class SessionApi {
         if (!session.getAdminUserId().equals(userService.findByAuthToken(authToken).getUserId())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        sessionService.deleteSessionUserList(sessionId, userId);
+        sessionService.deleteSessionUserList(userId, sessionId);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }

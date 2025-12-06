@@ -74,7 +74,8 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void deleteSessionUserList(String sessionId, String userId) {
-        sulRepository.deleteByUserIdAndSessionId(sessionId, userId);
+    public void deleteSessionUserList(String userId, String sessionId) {
+        var userForm = sulRepository.findByUserIdAndSessionId(userId, sessionId);
+        sulRepository.delete(userForm);
     }
 }
