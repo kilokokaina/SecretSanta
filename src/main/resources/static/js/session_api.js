@@ -15,10 +15,10 @@ function createSession() {
             <div class="session-item">
                 <div class="title">${sessionItem.sessionName}</div>
                 <div class="status">${sessionItem.status}</div>
-                <button class="btn btn-success">Посмотреть</button>
+                <button class="btn btn-success" onclick="location.href='session/${sessionItem.sessionId}'">Посмотреть</button>
             </div>
         ` + sessionList;
-        document.querySelector('.session-list').innerHTML = sessionList;
+        document.querySelector('.admin-session-list').innerHTML = sessionList;
     });
 }
 
@@ -37,7 +37,7 @@ function getSessions() {
                 <div class="session-item">
                     <div class="title">${adminItem.sessionName}</div>
                     <div class="status">${adminItem.status}</div>
-                    <button class="btn btn-success">Посмотреть</button>
+                    <button class="btn btn-success" onclick="location.href='session/${adminItem.sessionId}'">Посмотреть</button>
                 </div>
             `;
         });
@@ -49,7 +49,7 @@ function getSessions() {
                 <div class="session-item">
                     <div class="title">${participantItem.sessionName}</div>
                     <div class="status">${participantItem.status}</div>
-                    <button class="btn btn-success">Посмотреть</button>
+                    <button class="btn btn-success" onclick="location.href='session/${participantItem.sessionId}'">Посмотреть</button>
                 </div>
             `;
         });
@@ -92,9 +92,9 @@ function joinSession() {
             <div class="session-item">
                 <div class="title">${sessionItem.sessionName}</div>
                 <div class="status">${sessionItem.status}</div>
-                <button class="btn btn-success">Посмотреть</button>
+                <button class="btn btn-success" onclick="location.href='session/${sessionItem.sessionId}'">Посмотреть</button>
             </div>
         ` + sessionList;
-        document.querySelector('.session-list').innerHTML = sessionList;
+        document.querySelector('.participant-session-list').innerHTML = sessionList;
     });
 }
