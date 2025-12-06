@@ -105,7 +105,8 @@
     <body>
         <p hidden="hidden" th:text="${sessionId}" id="session-id"></p>
         <div class="container">
-            <a class="session-title" th:href="@{/}" th:text="'◀️' + ${sessionName}">Название сессии</a>
+            <a th:href="@{/}">Назад</a>
+            <div class="session-title"th:text="${sessionName}">Название сессии</div>
             <div class="session-info">
                 <div th:text="${creationDate}">Дата</div>
                 <div class="status" th:if="${status}">🔓</div>
