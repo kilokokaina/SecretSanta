@@ -13,7 +13,7 @@ function checkAuth() {
 }
 
 function getUser() {
-    fetch('get_user').then(async response => {
+    fetch('/get_user').then(async response => {
         let telegramUserData = await response.json();
         console.log('User: ' + telegramUserData);
         document.querySelector('#hello-label').innerHTML = `Привет, ${telegramUserData.firstName}👋!`
@@ -22,7 +22,7 @@ function getUser() {
 }
 
 function sendAuth() {
-    fetch('auth', {
+    fetch('/auth', {
         method: 'POST',
         body: window.Telegram.WebApp.initData
     }).then(async response => {

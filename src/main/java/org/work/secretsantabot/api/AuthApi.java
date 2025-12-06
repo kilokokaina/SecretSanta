@@ -24,10 +24,12 @@ public class AuthApi {
 
     @GetMapping("check_auth")
     public ResponseEntity<Boolean> checkAuth(HttpServletRequest request) {
-        String authCookie = authService.getCookieValue(request.getCookies(), "session_token");
-        if (authCookie == null) return ResponseEntity.ok(false);
+        if (request.getCookies() != null) {
+            String authCookie = authService.getCookieValue(request.getCookies(), "session_token");
+            return ResponseEntity.ok(authService.checkAuth(authCookie));
+        }
 
-        return ResponseEntity.ok(authService.checkAuth(authCookie));
+        return ResponseEntity.ok(false);
     }
 
     @GetMapping("get_user")

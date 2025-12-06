@@ -66,10 +66,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkAuth(String token) {
-        var user = userService.findByAuthToken(token);
+        if (token != null) {
+            var user = userService.findByAuthToken(token);
+            return user != null && user.getAuthTokenExpireDate() >= System.currentTimeMillis();
+        }
 
-        if (user == null) return false;
-        return user.getAuthTokenExpireDate() >= System.currentTimeMillis();
+        return false;
     }
 
     @Override
