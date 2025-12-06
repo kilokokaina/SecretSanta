@@ -70,7 +70,7 @@
         </style>
     </head>
     <body>
-        <p hidden="hidden" th:text="sessionId" id="session-id"></p>
+        <p hidden="hidden" th:text="${sessionId}" id="session-id"></p>
         <div class="container">
             <div class="session-title" th:text="${sessionName}">Название сессии</div>
             <div class="session-info">
