@@ -41,6 +41,9 @@ public class MainController {
         model.addAttribute("creationDate", session.getCreationDate());
         model.addAttribute("status", session.isStatus());
         model.addAttribute("isAdmin", (session.getAdminUserId().equals(userId)));
+        if (session.getAdminUserId().equals(userId)) {
+            model.addAttribute("sessionUsers", sessionService.getSessionUserList(sessionId));
+        }
 
         return "session";
     }

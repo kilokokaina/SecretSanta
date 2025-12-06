@@ -83,13 +83,12 @@
             <button class="btn btn-primary w-100" type="button" th:if="${isAdmin && !status}">Открыть регистрацию</button>
             <button class="btn btn-success w-100 mt-2" type="button" onclick="copyToClipboard()">Скопировать ID сессии</button>
 
-            <div class="participant-block" th:if="${isAdmin}" onload="getSessionUsers()">
+            <div class="participant-block" th:if="${isAdmin}">
                 <div class="participants-title">Участники</div>
                 <div class="participant-list">
-                    Тут пока никого...
-                    <div class="participant-item">
-                        <div class="participant-name">Псевдоним</div>
-                        <button class="btn btn-danger btn-sm" type="button" th:if="${status}">Удалить</button>
+                    <div class="participant-item" th:each="user : ${sessionUsers}">
+                        <div class="participant-name" th:text="${user.getUserNickname()}">Псевдоним</div>
+                        <button class="btn btn-danger btn-sm" type="button" th:if="${status}" th:id="${user.getUserId()}">Удалить</button>
                     </div>
                 </div>
             </div>
