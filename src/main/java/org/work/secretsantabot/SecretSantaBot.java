@@ -13,6 +13,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 import org.work.secretsantabot.model.User;
 import org.work.secretsantabot.repository.UserRepository;
+import org.work.secretsantabot.service.UserService;
 import org.work.secretsantabot.service.impl.UserServiceImpl;
 
 @Slf4j
@@ -20,14 +21,12 @@ import org.work.secretsantabot.service.impl.UserServiceImpl;
 public class SecretSantaBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
 
     private final TelegramClient telegramClient;
-    private final UserServiceImpl userService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public SecretSantaBot(UserServiceImpl userService, UserRepository userRepository) {
-        telegramClient = new OkHttpTelegramClient(getBotToken());
+    public SecretSantaBot(UserService userService) {
+        this.telegramClient = new OkHttpTelegramClient(getBotToken());
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -59,7 +58,7 @@ public class SecretSantaBot implements SpringLongPollingBot, LongPollingSingleTh
                     user.setTelegramLastname(userLastname);
                     user.setTelegramUsername(userName);
                     user.setTelegramChatId(chatId);
-                    userRepository.save(user);
+                    userService.save(user);
 
                     log.info("User was created: {}", userName);
                 }

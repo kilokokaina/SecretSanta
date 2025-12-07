@@ -53,6 +53,12 @@ public class SessionApi {
         return ResponseEntity.ok(session);
     }
 
+    @GetMapping("start_sending/{sessionId}")
+    public ResponseEntity<HttpStatus> startSending(@PathVariable String sessionId) {
+        sessionService.startSending(sessionId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @PostMapping("new_session")
     public ResponseEntity<Session> newSession(HttpServletRequest request, @RequestBody String sessionName) {
         String authToken = authService.getCookieValue(request.getCookies(), "session_token");

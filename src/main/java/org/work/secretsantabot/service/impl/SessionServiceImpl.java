@@ -1,5 +1,6 @@
 package org.work.secretsantabot.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.work.secretsantabot.model.Session;
@@ -13,6 +14,7 @@ import org.work.secretsantabot.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class SessionServiceImpl implements SessionService {
 
@@ -78,4 +80,11 @@ public class SessionServiceImpl implements SessionService {
         var userForm = sulRepository.findByUserIdAndSessionId(userId, sessionId);
         sulRepository.delete(userForm);
     }
+
+    @Override
+    public void startSending(String sessionId) {
+        var users = sulRepository.findUserBySessionId(sessionId);
+        log.info("Users: {}", users);
+    }
+
 }

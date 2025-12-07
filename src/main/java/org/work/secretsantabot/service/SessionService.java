@@ -16,5 +16,6 @@ public interface SessionService {
     SessionUserList findByUserIdAndSessionId(String userId, String sessionId);
     SessionUserList updateSessionUserList(SessionUserList sessionUserList);
     void deleteSessionUserList(String userId, String sessionId);
+    void startSending(String sessionId);
 
 }

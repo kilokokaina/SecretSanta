@@ -150,6 +150,11 @@ function deleteUserFromSession(element) {
     })
 }
 
+function startSending() {
+    let sessionId = document.querySelector('#session-id').innerHTML;
+    fetch(`/start_sending/${sessionId}`)
+}
+
 async function copyToClipboard() {
     let sessionId = document.querySelector('#session-id').innerHTML;
     const type = "text/plain";
