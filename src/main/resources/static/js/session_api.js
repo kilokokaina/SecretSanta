@@ -1,6 +1,10 @@
 let joinSessionModal = new bootstrap.Modal(document.getElementById('joinSessionModal'));
 let joinSessionBodyModal = new bootstrap.Modal(document.getElementById('joinSessionModalBody'));
 
+const stompClient = new StompJs.Client({
+    brokeURL: 'wss://tainiisanta.ru/websocket'
+});
+
 stompClient.onConnect = (frame) => {
     console.log('Connected' + frame);
     let sessionId = document.querySelector('#session-id-input').value;
