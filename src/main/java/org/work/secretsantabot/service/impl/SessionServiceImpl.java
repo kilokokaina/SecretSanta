@@ -85,6 +85,8 @@ public class SessionServiceImpl implements SessionService {
     public void startSending(String sessionId) {
         var users = sulRepository.findUserBySessionId(sessionId);
         log.info("Users: {}", users);
+
+
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class JoinSessionDto {
 
     private String sessionId;
+    private String userId;
     private String userNickname;
     private String wishList;
     private String stopList;

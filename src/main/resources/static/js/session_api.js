@@ -1,6 +1,33 @@
 let joinSessionModal = new bootstrap.Modal(document.getElementById('joinSessionModal'));
 let joinSessionBodyModal = new bootstrap.Modal(document.getElementById('joinSessionModalBody'));
 
+stompClient.onConnect = (frame) => {
+    console.log('Connected' + frame);
+    let sessionId = document.querySelector('#session-id-input').value;
+    stompClient.subscribe('/topic/new_participant', (joinSessionDto) => {
+        if (joinSessionDto.sessionId === sessionId) {
+            let participantList = document.querySelector('#participant-item').innerHTML;
+            if (participantList === 'Тут пока никого...') participantList = '';
+            participantList = `
+                <div class="participant-item" id="${joinSessionDto.userId}-item">
+                    <div class="participant-name">${joinSessionDto.userNickname}</div>
+                    <button class="btn btn-danger btn-sm" type="button" id="${user.userId}" onclick="deleteUserFromSession(this)">Удалить</button>
+                </div>
+            ` + participantList;
+
+            document.querySelector('#participant-item').innerHTML = participantList;
+        }
+    })
+}
+
+function connectToWebSocket() {
+    stompClient.activate();
+}
+
+function disconnectFromWebSocket() {
+    stompClient.deactivate();
+}
+
 function createSession() {
     let sessionName = document.querySelector('#session-name-input').value;
     fetch('/new_session', {
@@ -20,6 +47,8 @@ function createSession() {
             </div>
         ` + sessionList;
         document.querySelector('.admin-session-list').innerHTML = sessionList;
+
+        connectToWebSocket();
     });
 }
 
@@ -73,8 +102,10 @@ function findSession() {
 }
 
 function joinSession() {
+    let authToken = document.cookie.split('=')[1];
     let sessionBody = {
         sessionId: document.querySelector('#session-id-input').value,
+        userId: authToken,
         userNickname: document.querySelector('#userNickname').value,
         wishList: document.querySelector('#wishList').value,
         stopList: document.querySelector('#stopList').value,
@@ -158,9 +189,7 @@ function startSending() {
 async function copyToClipboard() {
     let sessionId = document.querySelector('#session-id').innerHTML;
     const type = "text/plain";
-    const clipboardItemData = {
-        [type]: sessionId,
-    };
+    const clipboardItemData = { [type]: sessionId, };
     const clipboardItem = new ClipboardItem(clipboardItemData);
     await navigator.clipboard.write([clipboardItem]);
 }

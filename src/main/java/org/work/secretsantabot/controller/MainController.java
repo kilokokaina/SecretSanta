@@ -35,7 +35,6 @@ public class MainController {
         String userId = userService.findByAuthToken(authToken).getUserId();
 
         var session = sessionService.findById(sessionId);
-        var userForm = sessionService.findByUserIdAndSessionId(userId, sessionId);
 
         model.addAttribute("sessionName", session.getSessionName());
         model.addAttribute("sessionId", session.getSessionId());
