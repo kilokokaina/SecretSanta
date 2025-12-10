@@ -103,7 +103,7 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="connectToWebSocket()">
         <div class="modal fade" id="joinSessionModalBody" aria-hidden="true" th:if="${userForm} != null" aria-labelledby="joinSessionModalBody"
              tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">

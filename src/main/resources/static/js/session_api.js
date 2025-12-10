@@ -47,8 +47,6 @@ function createSession() {
             </div>
         ` + sessionList;
         document.querySelector('.admin-session-list').innerHTML = sessionList;
-
-        connectToWebSocket();
     });
 }
 
